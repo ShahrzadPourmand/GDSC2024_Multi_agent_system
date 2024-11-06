@@ -1,0 +1,83 @@
+select_relevant_tables_task:
+  description: >
+    Give me a list of tables and columns from database that helps to answer the following question:    
+    " {user_question} "
+    
+  expected_output: >
+    Json of tables containing the table name, columns, their data types and keys.
+
+select_relevant_column_values:
+  description: >
+    You receive a list of tables and columns from a database that helps answer the following question: "{user_question}".
+    Your task is to identify and extract relevant column values from these tables to guide further analysis.
+    
+  expected_output: >
+    A structured JSON format that includes tables, relevant column names, and sample values where available.
+    Each relevant column should include a brief description of its role or content.
+    Provide example values to illustrate the type of data present, which helps guide further analysis.
+    Do not provide a final answer to the question; simply identify and present useful data points.
+        
+select_relevant_column_values_previous_version:
+  description: >
+    You recieve a list of tables and columns from database that helps to answer the following question:" {user_question} "
+    sample string columns in the database and search for values that help to answer that question.
+    
+  expected_output: >
+    A List in JSON format, identifying the relevant column values to guide further analysis. 
+    Do not provide a final answer to the question itself. 
+
+
+decompose_question_task:
+  description: >
+    Generate SQL queries that helps to answer the following question:
+    " {user_question} "
+     
+  expected_output: >
+    A list of sql queries that helps to answer the question
+
+  
+refine_sql_task:
+  description: >
+    Execute the given queries to answer the following question:
+    " {user_question} "
+    In case of error, fix them. 
+  expected_output: >
+    Full Answer markdown formatted and step by step logical approach to reach the final answer of the question. Always include the steps even if the user requests only a brief output, such as a single number. Do not interpret the findings.
+    
+
+search_online_task:
+  description: >
+    Search for relevant data in PIRLS online documents to find the answer to {user_question}
+    Specify in your report which websites were used to gather the relevant data.
+    Don't make up any information and don't change any numbers.
+    If you used the tables, indicate if the results might be rounded. Note that accessing the tables will cost you 20 USD, so use them only when you are sure you can find the relevant information.
+    If the relevant data is not found, respond concisely by stating that the specific data requested was not found. Avoid offering alternative sources, explanations, or suggestions for additional research. for example, if you can't find the data you must only say: "After reviewing the available PIRLS tables and websites, I was unable to find any related information."
+  expected_output: >
+    Write a detailed answer addressing the " {user_question} " with supporting evidence from the online documents. Include the exact website addresses where the information was found.
+    
+
+analyze_and_answer_question_task:
+  description: >
+      Use the provided data to answer the question: "{user_question}". Rely primarily on the PIRLS database (from the data engineer) and supplement with data from the PIRLS website when needed.
+    
+    Guidelines for analysis:
+    - If any discrepancies or rounding differences are found between the PIRLS database and the PIRLS website, highlight these clearly. Provide a brief explanation of any assumptions or methods used to reconcile the data.
+    - Stay strictly within the subject of PIRLS and avoid discussing unrelated topics.
+    - Present a detailed explanation of your conclusions, using quantitative evidence. Specify whether the data source is the PIRLS database or the PIRLS website for all claims.
+    - Avoid mentioning or discussing agent or SQL table column names.
+
+    Formatting rules:
+    - Use markdown format.
+    - Headings should always be at level 3 (###).
+    - Use the following emojis for bullet points:
+    - If needed, incorporate these emojis: ðŸŒ (earth), ðŸ  (home), ðŸ“ˆ (chart increasing), ðŸ“‰ (chart decreasing).
+    
+    Only provide the requested analysis without including background information, introductions, or conclusions. Focus on delivering a direct, data-driven response.
+    If needed, draw a plot using tools and include the plot's full address in markdown format. 
+    
+  expected_output: >
+    An evidence-backed answer that directly addresses the question "{user_question}", maintaining the integrity of key findings and the supporting data. Never write the agent names.
+
+
+
+    
